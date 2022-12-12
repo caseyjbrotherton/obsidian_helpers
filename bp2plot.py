@@ -38,7 +38,7 @@ daily_pattern = re.compile("(\d{4}-\d+-\d+).md$")
 
 
 days = {}
-for daily_path in glob.glob(args.vault + "daily/*/*"):
+for daily_path in glob.glob(args.vault + "/daily/*/*"):
      daily_match = daily_pattern.search(daily_path)
      if ( daily_match ):
        with open(daily_path, 'r') as daily_file:
@@ -76,7 +76,6 @@ daily_data['Diastolic'] = pd.to_numeric(daily_data.Diastolic,errors="coerce")
 
 # any zero is something that was not captured, and not a real value for BP, weight, or exercise
 daily_data.replace(0, np.nan, inplace=True)
-# print(daily_data.sort_index())
 
 bp_data = pd.melt(daily_data,id_vars="BP_Time",value_vars=("Systolic","Diastolic"),value_name="Reading")
 bp_data['BP_Time'] = pd.to_datetime(bp_data['BP_Time'], format='%Y-%m-%d %H:%M')
